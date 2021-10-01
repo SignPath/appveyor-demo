@@ -1,0 +1,30 @@
+# Define the build version
+version: 0.1.0.{build}
+
+# Select the worker image
+image: Visual Studio 2019
+
+# Fake build script
+build_script:
+  - echo "This step would build the artifact in build-output/unsigned/installer.msi"
+
+# Definition of artifacts
+artifacts:
+  - path: build-output\unsigned\installer.msi
+
+# Set the signing policy slug according to branch
+environment:
+  SIGNPATH_SIGNING_POLICY_SLUG: test-signing
+for:
+  -
+    branches:
+      only:
+        - /release/
+    environment:
+      SIGNPATH_SIGNING_POLICY_SLUG: rc-signing
+
+deploy:
+  - provider: Webhook
+    url: https://app.signpath.io/API/v1/%SIGNPATH_ORGANIZATION_ID%/Integrations/AppVeyor?ProjectSlug=%SIGNPATH_PROJECT_SLUG%&SigningPolicySlug=%SIGNPATH_SIGNING_POLICY_SLUG%
+    authorization: 'Bearer %SIGNPATH_CI_USER_TOKEN%'
+
