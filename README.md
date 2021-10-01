@@ -9,8 +9,9 @@ SignPath Demo for AppVeyor deploy hook integration
     * Remember the **Bearer token** for the next step
 2. On SignPath.io
   * Create a CI User and remember the **CI user token**
-  * Create a Project `My installer` for a .msi file 
-    * Create a signing policy `test-signing` and one `rc-signing`
+  * Create a Project `My installer` for a .msi file
+    * Name the artifact configuration `v1`
+    * Create a signing policy `test-signing` and one `release-signing`
      * Add the CI User as a submitter
     * Link an AppVeyor Trusted Build System
       * Enter the **Bearer token** you just copied from AppVeyor as **API key**
